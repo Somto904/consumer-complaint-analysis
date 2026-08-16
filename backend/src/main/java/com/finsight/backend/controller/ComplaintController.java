@@ -31,4 +31,14 @@ public class ComplaintController {
     public Map<String, Long> getComplaintCountByCompany() {
         return complaintService.getComplaintCountByCompany();
     }
+
+    @GetMapping("/api/complaints/by-product")
+    public Map<String, Long> getComplaintCountByProduct() {
+        return complaintService.getComplaintCountByProduct();
+    }
+
+    @GetMapping("/api/complaints/by-state")
+    public Map<String, Long> getComplaintCountByState() {
+        return complaintService.getComplaintCountByState();
+    }
 }

@@ -76,4 +76,23 @@ public class ComplaintService {
                         Collectors.counting()
                 ));
     }
+
+    public Map<String, Long> getComplaintCountByProduct() {
+        return getAllComplaints()
+                .stream()
+                .collect(Collectors.groupingBy(
+                        Complaint::getProduct,
+                        Collectors.counting()
+                ));
+    }
+
+    public Map<String, Long> getComplaintCountByState() {
+        return getAllComplaints()
+                .stream()
+                .collect(Collectors.groupingBy(
+                        Complaint::getState,
+                        Collectors.counting()
+                ));
+    }
+
 }
