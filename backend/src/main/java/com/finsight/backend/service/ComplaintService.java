@@ -95,4 +95,25 @@ public class ComplaintService {
                 ));
     }
 
+    public Map<String, Long> getComplaintCountByIssue() {
+        return getAllComplaints()
+                .stream()
+                .collect(Collectors.groupingBy(
+                        Complaint::getIssue,
+                        Collectors.counting()
+                ));
+    }
+
+    public double getTimelyResponseRate() {
+        List<Complaint> complaints = getAllComplaints();
+
+        long timelyCount = complaints.stream()
+                .filter(complaint -> "Yes".equalsIgnoreCase(complaint.getTimelyResponse()))
+                .count();
+
+        return (timelyCount * 100.0) / complaints.size();
+    }
+
+
+
 }

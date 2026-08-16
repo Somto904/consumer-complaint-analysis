@@ -41,4 +41,15 @@ public class ComplaintController {
     public Map<String, Long> getComplaintCountByState() {
         return complaintService.getComplaintCountByState();
     }
+
+    @GetMapping("/api/complaints/by-issue")
+    public Map<String, Long> getComplaintCountByIssue() {
+        return complaintService.getComplaintCountByIssue();
+    }
+
+    @GetMapping("/api/complaints/timely-response-rate")
+    public double getTimelyResponseRate() {
+        return complaintService.getTimelyResponseRate();
+    }
+
 }
