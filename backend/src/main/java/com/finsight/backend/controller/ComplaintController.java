@@ -1,6 +1,8 @@
 package com.finsight.backend.controller;
 
+import java.util.Map;
 import com.finsight.backend.model.Complaint;
+import com.finsight.backend.service.ComplaintService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,57 +11,24 @@ import java.util.List;
 @RestController
 public class ComplaintController {
 
+    private final ComplaintService complaintService;
+
+    public ComplaintController(ComplaintService complaintService) {
+        this.complaintService = complaintService;
+    }
+
     @GetMapping("/api/complaints")
     public List<Complaint> getComplaints() {
-        return List.of(
-                new Complaint(
-                        1L,
-                        "100001",
-                        "2024-01-15",
-                        "Credit card",
-                        "General-purpose credit card",
-                        "Billing dispute",
-                        "Problem with a purchase shown on statement",
-                        "Bank of America",
-                        "NY",
-                        "Web",
-                        "2024-01-16",
-                        "Closed with explanation",
-                        "Yes",
-                        "No"
-                ),
-                new Complaint(
-                        2L,
-                        "100002",
-                        "2024-02-10",
-                        "Checking or savings account",
-                        "Checking account",
-                        "Managing an account",
-                        "Funds not available",
-                        "Chase Bank",
-                        "NC",
-                        "Web",
-                        "2024-02-11",
-                        "Closed with monetary relief",
-                        "Yes",
-                        "No"
-                ),
-                new Complaint(
-                        3L,
-                        "100003",
-                        "2024-03-05",
-                        "Credit reporting",
-                        "Credit reporting",
-                        "Incorrect information on your report",
-                        "Information belongs to someone else",
-                        "Experian",
-                        "TX",
-                        "Referral",
-                        "2024-03-06",
-                        "In progress",
-                        "No",
-                        "N/A"
-                )
-        );
+        return complaintService.getAllComplaints();
+    }
+
+    @GetMapping("/api/complaints/count")
+    public int getComplaintCount() {
+        return complaintService.getComplaintCount();
+    }
+
+    @GetMapping("/api/complaints/top-companies")
+    public Map<String, Long> getComplaintCountByCompany() {
+        return complaintService.getComplaintCountByCompany();
     }
 }
