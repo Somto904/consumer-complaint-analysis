@@ -2,8 +2,14 @@ package com.finsight.backend.service;
 
 import com.finsight.backend.dto.DashboardSummary;
 import com.finsight.backend.model.Complaint;
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -12,65 +18,66 @@ import java.util.stream.Collectors;
 @Service
 public class ComplaintService {
 
+    private final List<Complaint> complaints = new ArrayList<>();
+
+    @PostConstruct
+    public void loadComplaintsFromCsv() {
+        try {
+            InputStream inputStream = getClass()
+                    .getClassLoader()
+                    .getResourceAsStream("data/sample_complaints.csv");
+
+            if (inputStream == null) {
+                throw new RuntimeException("CSV file not found: data/sample_complaints.csv");
+            }
+
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(inputStream, StandardCharsets.UTF_8)
+            );
+
+            reader.readLine(); // skip header row
+
+            String line;
+            long id = 1L;
+
+            while ((line = reader.readLine()) != null) {
+                String[] values = line.split(",", -1);
+
+                Complaint complaint = new Complaint(
+                        id++,
+                        values[0],
+                        values[1],
+                        values[2],
+                        values[3],
+                        values[4],
+                        values[5],
+                        values[6],
+                        values[7],
+                        values[8],
+                        values[9],
+                        values[10],
+                        values[11],
+                        values[12]
+                );
+
+                complaints.add(complaint);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load complaint data from CSV", e);
+        }
+    }
+
     public List<Complaint> getAllComplaints() {
-        return List.of(
-                new Complaint(
-                        1L,
-                        "100001",
-                        "2024-01-15",
-                        "Credit card",
-                        "General-purpose credit card",
-                        "Billing dispute",
-                        "Problem with a purchase shown on statement",
-                        "Bank of America",
-                        "NY",
-                        "Web",
-                        "2024-01-16",
-                        "Closed with explanation",
-                        "Yes",
-                        "No"
-                ),
-                new Complaint(
-                        2L,
-                        "100002",
-                        "2024-02-10",
-                        "Checking or savings account",
-                        "Checking account",
-                        "Managing an account",
-                        "Funds not available",
-                        "Chase Bank",
-                        "NC",
-                        "Web",
-                        "2024-02-11",
-                        "Closed with monetary relief",
-                        "Yes",
-                        "No"
-                ),
-                new Complaint(
-                        3L,
-                        "100003",
-                        "2024-03-05",
-                        "Credit reporting",
-                        "Credit reporting",
-                        "Incorrect information on your report",
-                        "Information belongs to someone else",
-                        "Experian",
-                        "TX",
-                        "Referral",
-                        "2024-03-06",
-                        "In progress",
-                        "No",
-                        "N/A"
-                )
-        );
+        return complaints;
     }
 
     public int getComplaintCount() {
-        return getAllComplaints().size();
+        return complaints.size();
     }
 
     public Map<String, Long> getComplaintCountByCompany() {
-        return getAllComplaints()
+        return complaints
                 .stream()
                 .collect(Collectors.groupingBy(
                         Complaint::getCompany,
@@ -79,7 +86,7 @@ public class ComplaintService {
     }
 
     public Map<String, Long> getComplaintCountByProduct() {
-        return getAllComplaints()
+        return complaints
                 .stream()
                 .collect(Collectors.groupingBy(
                         Complaint::getProduct,
@@ -88,7 +95,7 @@ public class ComplaintService {
     }
 
     public Map<String, Long> getComplaintCountByState() {
-        return getAllComplaints()
+        return complaints
                 .stream()
                 .collect(Collectors.groupingBy(
                         Complaint::getState,
@@ -97,7 +104,7 @@ public class ComplaintService {
     }
 
     public Map<String, Long> getComplaintCountByIssue() {
-        return getAllComplaints()
+        return complaints
                 .stream()
                 .collect(Collectors.groupingBy(
                         Complaint::getIssue,
@@ -106,7 +113,9 @@ public class ComplaintService {
     }
 
     public double getTimelyResponseRate() {
-        List<Complaint> complaints = getAllComplaints();
+        if (complaints.isEmpty()) {
+            return 0.0;
+        }
 
         long timelyCount = complaints.stream()
                 .filter(complaint -> "Yes".equalsIgnoreCase(complaint.getTimelyResponse()))

@@ -1,0 +1,6 @@
+complaint_id,date_received,product,sub_product,issue,sub_issue,company,state,submitted_via,date_sent_to_company,company_response,timely_response,consumer_disputed
+100001,2024-01-15,Credit card,General-purpose credit card,Billing dispute,Problem with a purchase shown on statement,Bank of America,NY,Web,2024-01-16,Closed with explanation,Yes,No
+100002,2024-02-10,Checking or savings account,Checking account,Managing an account,Funds not available,Chase Bank,NC,Web,2024-02-11,Closed with monetary relief,Yes,No
+100003,2024-03-05,Credit reporting,Credit reporting,Incorrect information on your report,Information belongs to someone else,Experian,TX,Referral,2024-03-06,In progress,No,N/A
+100004,2024-04-12,Credit card,Store credit card,Billing dispute,Problem with fees,Capital One,CA,Web,2024-04-13,Closed with explanation,Yes,No
+100005,2024-05-20,Debt collection,Credit card debt,Attempts to collect debt not owed,Debt is not yours,Wells Fargo,TX,Phone,2024-05-21,Closed with explanation,No,Yes
