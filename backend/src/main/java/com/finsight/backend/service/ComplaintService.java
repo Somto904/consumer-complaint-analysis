@@ -75,12 +75,24 @@ public class ComplaintService {
     public List<Complaint> getFilteredComplaints(String company, String product, String state,
                                                  String issue, String timelyResponse) {
         return complaints.stream()
-                .filter(complaint -> company == null || complaint.getCompany().equalsIgnoreCase(company))
-                .filter(complaint -> product == null || complaint.getProduct().equalsIgnoreCase(product))
-                .filter(complaint -> state == null || complaint.getState().equalsIgnoreCase(state))
-                .filter(complaint -> issue == null || complaint.getIssue().equalsIgnoreCase(issue))
-                .filter(complaint -> timelyResponse == null || complaint.getTimelyResponse().equalsIgnoreCase(timelyResponse))
+                .filter(complaint -> matchesFilter(complaint.getCompany(), company))
+                .filter(complaint -> matchesFilter(complaint.getProduct(), product))
+                .filter(complaint -> matchesFilter(complaint.getState(), state))
+                .filter(complaint -> matchesFilter(complaint.getIssue(), issue))
+                .filter(complaint -> matchesFilter(complaint.getTimelyResponse(), timelyResponse))
                 .toList();
+    }
+
+    private boolean matchesFilter(String fieldValue, String filterValue) {
+        if (filterValue == null || filterValue.isBlank()) {
+            return true;
+        }
+
+        if (fieldValue == null) {
+            return false;
+        }
+
+        return fieldValue.toLowerCase().contains(filterValue.toLowerCase());
     }
 
     public int getComplaintCount() {
