@@ -1,30 +1,59 @@
 package com.finsight.backend.model;
 
+import jakarta.persistence.*;
+
+import java.time.LocalDate;
+
+@Entity
+@Table(name = "complaints")
 public class Complaint {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "complaint_id")
     private String complaintId;
-    private String dateReceived;
+
+    @Column(name = "date_received")
+    private LocalDate dateReceived;
+
     private String product;
+
+    @Column(name = "sub_product")
     private String subProduct;
+
     private String issue;
+
+    @Column(name = "sub_issue")
     private String subIssue;
+
     private String company;
+
     private String state;
+
+    @Column(name = "submitted_via")
     private String submittedVia;
-    private String dateSentToCompany;
+
+    @Column(name = "date_sent_to_company")
+    private LocalDate dateSentToCompany;
+
+    @Column(name = "company_response")
     private String companyResponse;
+
+    @Column(name = "timely_response")
     private String timelyResponse;
+
+    @Column(name = "consumer_disputed")
     private String consumerDisputed;
 
     public Complaint() {
     }
 
-    public Complaint(Long id, String complaintId, String dateReceived, String product, String subProduct,
+    public Complaint(String complaintId, LocalDate dateReceived, String product, String subProduct,
                      String issue, String subIssue, String company, String state, String submittedVia,
-                     String dateSentToCompany, String companyResponse, String timelyResponse,
+                     LocalDate dateSentToCompany, String companyResponse, String timelyResponse,
                      String consumerDisputed) {
-        this.id = id;
         this.complaintId = complaintId;
         this.dateReceived = dateReceived;
         this.product = product;
@@ -48,7 +77,7 @@ public class Complaint {
         return complaintId;
     }
 
-    public String getDateReceived() {
+    public LocalDate getDateReceived() {
         return dateReceived;
     }
 
@@ -80,7 +109,7 @@ public class Complaint {
         return submittedVia;
     }
 
-    public String getDateSentToCompany() {
+    public LocalDate getDateSentToCompany() {
         return dateSentToCompany;
     }
 
