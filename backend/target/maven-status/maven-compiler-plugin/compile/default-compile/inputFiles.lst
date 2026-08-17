@@ -1,0 +1,9 @@
+/Users/somtoezenagu/Documents/GitHub/consumer-complaint-analysis/backend/src/main/java/com/finsight/backend/BackendApplication.java
+/Users/somtoezenagu/Documents/GitHub/consumer-complaint-analysis/backend/src/main/java/com/finsight/backend/controller/CfpbImportController.java
+/Users/somtoezenagu/Documents/GitHub/consumer-complaint-analysis/backend/src/main/java/com/finsight/backend/controller/ComplaintController.java
+/Users/somtoezenagu/Documents/GitHub/consumer-complaint-analysis/backend/src/main/java/com/finsight/backend/controller/HealthController.java
+/Users/somtoezenagu/Documents/GitHub/consumer-complaint-analysis/backend/src/main/java/com/finsight/backend/dto/DashboardSummary.java
+/Users/somtoezenagu/Documents/GitHub/consumer-complaint-analysis/backend/src/main/java/com/finsight/backend/model/Complaint.java
+/Users/somtoezenagu/Documents/GitHub/consumer-complaint-analysis/backend/src/main/java/com/finsight/backend/repository/ComplaintRepository.java
+/Users/somtoezenagu/Documents/GitHub/consumer-complaint-analysis/backend/src/main/java/com/finsight/backend/service/CfpbImportService.java
+/Users/somtoezenagu/Documents/GitHub/consumer-complaint-analysis/backend/src/main/java/com/finsight/backend/service/ComplaintService.java

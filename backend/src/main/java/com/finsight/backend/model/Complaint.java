@@ -12,7 +12,7 @@ public class Complaint {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "complaint_id")
+    @Column(name = "complaint_id", unique = true)
     private String complaintId;
 
     @Column(name = "date_received")
@@ -20,14 +20,16 @@ public class Complaint {
 
     private String product;
 
-    @Column(name = "sub_product")
+    @Column(name = "sub_product", columnDefinition = "TEXT")
     private String subProduct;
 
+    @Column(columnDefinition = "TEXT")
     private String issue;
 
-    @Column(name = "sub_issue")
+    @Column(name = "sub_issue", columnDefinition = "TEXT")
     private String subIssue;
 
+    @Column(columnDefinition = "TEXT")
     private String company;
 
     private String state;
@@ -38,7 +40,7 @@ public class Complaint {
     @Column(name = "date_sent_to_company")
     private LocalDate dateSentToCompany;
 
-    @Column(name = "company_response")
+    @Column(name = "company_response", columnDefinition = "TEXT")
     private String companyResponse;
 
     @Column(name = "timely_response")
