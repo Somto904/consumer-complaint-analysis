@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,23 +42,31 @@ public class ComplaintService {
             long id = 1L;
 
             while ((line = reader.readLine()) != null) {
+                if (line.isBlank()) {
+                    continue;
+                }
+
                 String[] values = line.split(",", -1);
+
+                if (values.length < 13) {
+                    throw new RuntimeException("Invalid CSV row: " + line);
+                }
 
                 Complaint complaint = new Complaint(
                         id++,
-                        values[0],
-                        values[1],
-                        values[2],
-                        values[3],
-                        values[4],
-                        values[5],
-                        values[6],
-                        values[7],
-                        values[8],
-                        values[9],
-                        values[10],
-                        values[11],
-                        values[12]
+                        values[0].trim(),
+                        values[1].trim(),
+                        values[2].trim(),
+                        values[3].trim(),
+                        values[4].trim(),
+                        values[5].trim(),
+                        values[6].trim(),
+                        values[7].trim(),
+                        values[8].trim(),
+                        values[9].trim(),
+                        values[10].trim(),
+                        values[11].trim(),
+                        values[12].trim()
                 );
 
                 complaints.add(complaint);
@@ -83,54 +92,31 @@ public class ComplaintService {
                 .toList();
     }
 
-    private boolean matchesFilter(String fieldValue, String filterValue) {
-        if (filterValue == null || filterValue.isBlank()) {
-            return true;
-        }
-
-        if (fieldValue == null) {
-            return false;
-        }
-
-        return fieldValue.toLowerCase().contains(filterValue.toLowerCase());
-    }
-
     public int getComplaintCount() {
         return complaints.size();
     }
 
     public Map<String, Long> getComplaintCountByCompany() {
-        return complaints
-                .stream()
-                .collect(Collectors.groupingBy(
-                        Complaint::getCompany,
-                        Collectors.counting()
-                ));
+        return groupAndSortByCount(Complaint::getCompany);
     }
 
     public Map<String, Long> getComplaintCountByProduct() {
-        return complaints
-                .stream()
-                .collect(Collectors.groupingBy(
-                        Complaint::getProduct,
-                        Collectors.counting()
-                ));
+        return groupAndSortByCount(Complaint::getProduct);
     }
 
     public Map<String, Long> getComplaintCountByState() {
-        return complaints
-                .stream()
-                .collect(Collectors.groupingBy(
-                        Complaint::getState,
-                        Collectors.counting()
-                ));
+        return groupAndSortByCount(Complaint::getState);
     }
 
     public Map<String, Long> getComplaintCountByIssue() {
-        return complaints
-                .stream()
+        return groupAndSortByCount(Complaint::getIssue);
+    }
+
+    public Map<String, Long> getComplaintCountByYear() {
+        return complaints.stream()
                 .collect(Collectors.groupingBy(
-                        Complaint::getIssue,
+                        complaint -> extractYear(complaint.getDateReceived()),
+                        TreeMap::new,
                         Collectors.counting()
                 ));
     }
@@ -155,6 +141,43 @@ public class ComplaintService {
                 getTopValue(getComplaintCountByIssue()),
                 getTimelyResponseRate()
         );
+    }
+
+    private boolean matchesFilter(String fieldValue, String filterValue) {
+        if (filterValue == null || filterValue.isBlank()) {
+            return true;
+        }
+
+        if (fieldValue == null) {
+            return false;
+        }
+
+        return fieldValue.toLowerCase().contains(filterValue.toLowerCase());
+    }
+
+    private Map<String, Long> groupAndSortByCount(java.util.function.Function<Complaint, String> classifier) {
+        return complaints.stream()
+                .collect(Collectors.groupingBy(
+                        classifier,
+                        Collectors.counting()
+                ))
+                .entrySet()
+                .stream()
+                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue,
+                        java.util.LinkedHashMap::new
+                ));
+    }
+
+    private String extractYear(String dateReceived) {
+        if (dateReceived == null || dateReceived.length() < 4) {
+            return "Unknown";
+        }
+
+        return dateReceived.substring(0, 4);
     }
 
     private String getTopValue(Map<String, Long> groupedData) {

@@ -55,6 +55,11 @@ public class ComplaintController {
         return complaintService.getComplaintCountByIssue();
     }
 
+    @GetMapping("/api/complaints/by-year")
+    public Map<String, Long> getComplaintCountByYear() {
+        return complaintService.getComplaintCountByYear();
+    }
+
     @GetMapping("/api/complaints/timely-response-rate")
     public double getTimelyResponseRate() {
         return complaintService.getTimelyResponseRate();
