@@ -72,6 +72,17 @@ public class ComplaintService {
         return complaints;
     }
 
+    public List<Complaint> getFilteredComplaints(String company, String product, String state,
+                                                 String issue, String timelyResponse) {
+        return complaints.stream()
+                .filter(complaint -> company == null || complaint.getCompany().equalsIgnoreCase(company))
+                .filter(complaint -> product == null || complaint.getProduct().equalsIgnoreCase(product))
+                .filter(complaint -> state == null || complaint.getState().equalsIgnoreCase(state))
+                .filter(complaint -> issue == null || complaint.getIssue().equalsIgnoreCase(issue))
+                .filter(complaint -> timelyResponse == null || complaint.getTimelyResponse().equalsIgnoreCase(timelyResponse))
+                .toList();
+    }
+
     public int getComplaintCount() {
         return complaints.size();
     }

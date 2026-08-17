@@ -4,6 +4,7 @@ import com.finsight.backend.dto.DashboardSummary;
 import com.finsight.backend.model.Complaint;
 import com.finsight.backend.service.ComplaintService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,8 +20,14 @@ public class ComplaintController {
     }
 
     @GetMapping("/api/complaints")
-    public List<Complaint> getComplaints() {
-        return complaintService.getAllComplaints();
+    public List<Complaint> getComplaints(
+            @RequestParam(required = false) String company,
+            @RequestParam(required = false) String product,
+            @RequestParam(required = false) String state,
+            @RequestParam(required = false) String issue,
+            @RequestParam(required = false) String timelyResponse
+    ) {
+        return complaintService.getFilteredComplaints(company, product, state, issue, timelyResponse);
     }
 
     @GetMapping("/api/complaints/count")
