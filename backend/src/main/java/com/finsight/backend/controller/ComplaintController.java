@@ -1,12 +1,13 @@
 package com.finsight.backend.controller;
 
-import java.util.Map;
+import com.finsight.backend.dto.DashboardSummary;
 import com.finsight.backend.model.Complaint;
 import com.finsight.backend.service.ComplaintService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ComplaintController {
@@ -52,4 +53,8 @@ public class ComplaintController {
         return complaintService.getTimelyResponseRate();
     }
 
+    @GetMapping("/api/dashboard/summary")
+    public DashboardSummary getDashboardSummary() {
+        return complaintService.getDashboardSummary();
+    }
 }

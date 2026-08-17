@@ -1,12 +1,13 @@
 package com.finsight.backend.service;
 
-import java.util.Map;
-import java.util.stream.Collectors;
-
+import com.finsight.backend.dto.DashboardSummary;
 import com.finsight.backend.model.Complaint;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ComplaintService {
@@ -111,9 +112,24 @@ public class ComplaintService {
                 .filter(complaint -> "Yes".equalsIgnoreCase(complaint.getTimelyResponse()))
                 .count();
 
-        return (timelyCount * 100.0) / complaints.size();
+        return Math.round(((timelyCount * 100.0) / complaints.size()) * 100.0) / 100.0;
     }
 
+    public DashboardSummary getDashboardSummary() {
+        return new DashboardSummary(
+                getComplaintCount(),
+                getTopValue(getComplaintCountByCompany()),
+                getTopValue(getComplaintCountByProduct()),
+                getTopValue(getComplaintCountByIssue()),
+                getTimelyResponseRate()
+        );
+    }
 
-
+    private String getTopValue(Map<String, Long> groupedData) {
+        return groupedData.entrySet()
+                .stream()
+                .max(Comparator.comparingLong(Map.Entry::getValue))
+                .map(Map.Entry::getKey)
+                .orElse("N/A");
+    }
 }
