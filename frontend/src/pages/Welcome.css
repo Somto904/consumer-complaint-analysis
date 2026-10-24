@@ -1,0 +1,133 @@
+/* FinSight: first-visit welcome page. Scope styles with fn- to avoid other pages. */
+.fn-welcome {
+  --fn-forest: #173d32;
+  --fn-emerald: #278563;
+  --fn-ink: #172b25;
+  --fn-muted: #667c70;
+  --fn-cream: #f7f8f4;
+  min-height: 100vh;
+  color: var(--fn-ink);
+  background: var(--fn-cream);
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.fn-welcome button,
+.fn-welcome input { font: inherit; }
+.fn-welcome button { cursor: pointer; }
+.fn-welcome button:disabled { cursor: not-allowed; }
+.fn-welcome :focus-visible { outline: 3px solid #278563; outline-offset: 4px; }
+.fn-container { width: min(1190px, calc(100% - 64px)); margin-inline: auto; }
+
+.fn-header {
+  min-height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.fn-logo { display: inline-flex; align-items: center; gap: 12px; font-size: 24px; font-weight: 800; letter-spacing: -1px; color: var(--fn-forest); }
+.fn-logo-icon { display: grid; place-items: center; width: 43px; height: 43px; border-radius: 13px; background: var(--fn-forest); color: white; }
+.fn-header-actions { display: flex; align-items: center; gap: 14px; }
+.fn-header-signin { background: none; color: var(--fn-forest); border: 0; padding: 12px 6px; font-size: 13px; font-weight: 700; }
+.fn-header-create { border: 1px solid var(--fn-forest); border-radius: 12px; background: var(--fn-forest); color: white; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 19px; font-size: 13px; font-weight: 700; transition: background .2s; }
+.fn-header-create:hover { background: #275846; }
+
+.fn-hero {
+  min-height: 690px;
+  display: grid;
+  grid-template-columns: minmax(0,1.15fr) minmax(0,.85fr);
+  gap: clamp(32px,5vw,80px);
+  align-items: center;
+  padding-block: 55px 92px;
+}
+.fn-hero-copy { animation: fn-enter .7s ease both; }
+.fn-eyebrow { display: inline-flex; align-items: center; gap: 12px; color: var(--fn-emerald); font-weight: 800; letter-spacing: 2px; font-size: 11px; }
+.fn-eyebrow-dot { height: 9px; width: 9px; border-radius: 50%; background: #2c9d6a; box-shadow: 0 0 0 6px #2c9d6a18; }
+.fn-hero h1 { font-size: clamp(46px,4.8vw,76px); line-height: 1.14; letter-spacing: -.056em; margin: 26px 0 25px; font-weight: 800; }
+.fn-hero h1 span { color: var(--fn-emerald); }
+.fn-hero-description { max-width: 525px; color: var(--fn-muted); font-size: 16px; line-height: 1.95; margin: 0; }
+.fn-hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 13px; margin-top: 33px; }
+.fn-primary-btn, .fn-secondary-btn { display: inline-flex; align-items: center; justify-content: center; gap: 13px; border-radius: 12px; min-height: 57px; padding: 0 22px; font-weight: 700; font-size: 13px; transition: transform .2s, background .2s; }
+.fn-primary-btn { background: var(--fn-forest); color: white; border: 1px solid var(--fn-forest); }
+.fn-primary-btn:hover { background: #28644c; transform: translateY(-2px); }
+.fn-secondary-btn { background: #e7eee8; color: var(--fn-forest); border: 1px solid transparent; }
+.fn-secondary-btn:hover { background: #d9e9dc; transform: translateY(-2px); }
+.fn-trust-note { display: flex; flex-wrap: wrap; gap: 20px; color: #708579; font-size: 12px; margin-top: 27px; }
+.fn-trust-note span { display: inline-flex; gap: 6px; align-items: center; }
+.fn-trust-note svg { color: var(--fn-emerald); }
+
+/* Genuine photograph instead of a tilted app card. */
+.fn-hero-figure { position: relative; margin: 0; justify-self: stretch; max-width: 450px; width: 100%; animation: fn-enter .9s .1s ease both; }
+.fn-photo-frame { position: relative; aspect-ratio: 3 / 3.55; width: 100%; background: #cce4d5; border-radius: 130px 130px 22px 22px; overflow: hidden; }
+.fn-photo-frame::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(0deg,rgba(17,47,35,.18),transparent 43%); }
+.fn-hero-photo { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; }
+.fn-photo-caption { margin: 17px 2px 0; display: flex; align-items: center; gap: 13px; color: #527e65; font-size: 10px; letter-spacing: 1.4px; font-weight: 800; }
+.fn-caption-line { width: 37px; height: 1px; background: #8faf9b; }
+.fn-caption-star { margin-left: auto; color: var(--fn-emerald); font-size: 23px; line-height: 1; }
+
+.fn-benefits { padding: 92px 0 102px; background: white; }
+.fn-benefits-header { display: flex; justify-content: space-between; align-items: end; gap: 50px; }
+.fn-section-label { font-size: 11px; font-weight: 800; letter-spacing: 1.9px; color: var(--fn-emerald); margin: 0; }
+.fn-benefits-header h2 { max-width: 620px; font-size: clamp(27px,3.3vw,45px); letter-spacing: -.045em; line-height: 1.28; margin: 17px 0 0; }
+.fn-benefits-intro { max-width: 350px; font-size: 14px; color: var(--fn-muted); line-height: 1.85; margin: 0; }
+.fn-benefit-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 24px; margin-top: 55px; }
+.fn-benefit { border-top: 1px solid #cfded3; padding: 29px 0 28px; }
+.fn-benefit-number { color: var(--fn-emerald); font-size: 11px; font-weight: 800; letter-spacing: 1px; }
+.fn-benefit h3 { margin: 38px 0 12px; font-size: 21px; letter-spacing: -.035em; }
+.fn-benefit p { max-width: 325px; margin: 0; font-size: 13px; line-height: 1.9; color: var(--fn-muted); }
+.fn-cta-row { margin-top: 76px; padding: 35px 38px; background: #e4f0e7; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; gap: 22px; }
+.fn-cta-row h2 { font-size: 26px; margin: 13px 0 0; letter-spacing: -.035em; }
+.fn-footer { padding-block: 31px; display: flex; justify-content: space-between; gap: 18px; color: #748579; font-size: 12px; }
+
+/* Account UI is intentionally NOT connected to authentication yet. */
+.fn-dialog-overlay { position: fixed; inset: 0; z-index: 200; background: rgba(14,29,23,.55); display: grid; place-items: center; padding: 18px; }
+.fn-dialog { position: relative; width: min(100%,435px); max-height: 95vh; overflow-y: auto; border-radius: 22px; background: white; padding: 31px; box-shadow: 0 25px 70px #0003; }
+.fn-dialog-close { position: absolute; top: 15px; right: 15px; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: #f0f5f1; border: 0; color: var(--fn-forest); }
+.fn-dialog-icon { display: grid; place-items: center; width: 48px; height: 48px; background: #e3efe7; color: var(--fn-forest); border-radius: 13px; margin-bottom: 17px; }
+.fn-dialog h2 { font-size: 29px; color: var(--fn-forest); letter-spacing: -.04em; margin: 0 0 11px; }
+.fn-dialog-copy { color: var(--fn-muted); font-size: 13px; line-height: 1.8; }
+.fn-auth-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 5px; margin: 20px 0; background: #edf3ee; border-radius: 12px; }
+.fn-auth-tabs button { border: 0; background: transparent; border-radius: 10px; min-height: 41px; font-weight: 700; color: var(--fn-forest); font-size: 13px; }
+.fn-auth-tabs .active { background: white; box-shadow: 0 2px 9px #152a1a12; }
+.fn-auth-form { display: grid; gap: 15px; }
+.fn-auth-form label { display: grid; gap: 8px; color: var(--fn-forest); font-weight: 700; font-size: 12px; }
+.fn-auth-form input { min-height: 47px; width: 100%; border: 1px solid #dce7de; padding: 10px 13px; border-radius: 11px; font-size: 13px; }
+.fn-auth-form input:disabled { color: #8fa098; background: #f8faf8; }
+.fn-auth-disabled { background: #e3ebe5; color: #607569; border: 0; min-height: 46px; border-radius: 12px; font-size: 12px; font-weight: 800; }
+.fn-guest-btn { display: flex; justify-content: center; align-items: center; gap: 8px; width: 100%; margin-top: 11px; min-height: 46px; color: white; background: var(--fn-forest); border: 0; border-radius: 12px; font-size: 13px; font-weight: 800; }
+
+@keyframes fn-enter { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 980px) {
+  .fn-hero { grid-template-columns: minmax(0,1fr) minmax(0,.85fr); gap: 30px; }
+  .fn-hero h1 { font-size: clamp(39px,4.8vw,62px); }
+  .fn-photo-frame { aspect-ratio: 3 / 4; }
+}
+@media (max-width: 760px) {
+  .fn-container { width: min(100% - 36px,1190px); }
+  .fn-header { min-height: 80px; }
+  .fn-logo { font-size: 20px; }
+  .fn-logo-icon { width: 38px; height: 38px; }
+  .fn-header-actions { gap: 7px; }
+  .fn-header-signin { font-size: 12px; }
+  .fn-header-create { min-height: 39px; padding: 0 11px; font-size: 11px; }
+  .fn-hero { display: flex; flex-direction: column; align-items: stretch; gap: 42px; min-height: auto; padding-top: 43px; padding-bottom: 68px; }
+  .fn-hero h1 { font-size: clamp(39px,9.2vw,63px); }
+  .fn-hero-description { font-size: 14px; }
+  .fn-hero-figure { align-self: center; max-width: 460px; }
+  .fn-photo-frame { aspect-ratio: 4 / 4.2; border-radius: 100px 100px 20px 20px; }
+  .fn-benefits { padding-block: 68px; }
+  .fn-benefits-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .fn-benefit-grid { grid-template-columns: 1fr; margin-top: 35px; gap: 6px; }
+  .fn-benefit h3 { margin-top: 23px; }
+  .fn-cta-row { margin-top: 46px; flex-direction: column; align-items: flex-start; padding: 28px; }
+  .fn-footer { flex-direction: column; }
+}
+@media (max-width: 420px) {
+  .fn-hero-actions { align-items: stretch; flex-direction: column; }
+  .fn-hero-actions button { width: 100%; }
+  .fn-header-create svg { display: none; }
+  .fn-header-create { padding: 0 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fn-welcome *, .fn-welcome *::before, .fn-welcome *::after { animation: none !important; transition: none !important; }
+}
