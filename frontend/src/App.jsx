@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import {
   Navigate,
@@ -10,43 +11,19 @@ import SiteLayout from "./components/SiteLayout";
 import Welcome from "./pages/Welcome";
 import SectionPage, { Dashboard } from "./pages/SectionPage";
 
-const VISITED_KEY = "finsight:visited";
 const LAST_PAGE_KEY = "finsight:last-page";
-
-function EntryRoute() {
-  const visited = localStorage.getItem(VISITED_KEY) === "true";
-
-  if (!visited) {
-    return <Welcome />;
-  }
-
-  const lastPage = localStorage.getItem(LAST_PAGE_KEY);
-
-  const allowedPages = [
-    "/app",
-    "/compare",
-    "/find-my-bank",
-    "/learn",
-    "/credit-guide",
-    "/insights",
-    "/tools",
-  ];
-
-  const destination = allowedPages.includes(lastPage)
-    ? lastPage
-    : "/app";
-
-  return <Navigate to={destination} replace />;
-}
 
 function RememberPage() {
   const location = useLocation();
 
   useEffect(() => {
-    const path = location.pathname;
-
-    if (path !== "/") {
-      localStorage.setItem(LAST_PAGE_KEY, path);
+    // Save the last application section visited,
+    // but never redirect visitors away from the homepage.
+    if (location.pathname !== "/") {
+      localStorage.setItem(
+        LAST_PAGE_KEY,
+        location.pathname
+      );
     }
   }, [location.pathname]);
 
@@ -59,8 +36,10 @@ export default function App() {
       <RememberPage />
 
       <Routes>
-        <Route path="/" element={<EntryRoute />} />
+        {/* Always display Welcome at the homepage URL */}
+        <Route path="/" element={<Welcome />} />
 
+        {/* Main application */}
         <Route element={<SiteLayout />}>
           <Route path="/app" element={<Dashboard />} />
 
