@@ -1,4 +1,5 @@
 
+import ConsumerInsights from "./pages/ConsumerInsights";
 import { useEffect } from "react";
 import {
   Navigate,
@@ -89,13 +90,7 @@ export default function App() {
 
           <Route
             path="/insights"
-            element={
-              <SectionPage
-                section="insights"
-                title="Consumer insights"
-                description="Explore trends in real consumer financial complaint data."
-              />
-            }
+            element={<ConsumerInsights />}
           />
 
           <Route
